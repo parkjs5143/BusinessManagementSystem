@@ -1,0 +1,73 @@
+
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, a, em, img, ins, small, strong, sub, sup, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, footer, header, nav, section, summary, time, mark { margin: 0; padding: 0; box-sizing: border-box; }
+
+ul, ol, li { list-style: none; }
+
+a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: rgba(0,0,0,.1); }
+
+a:hover { cursor: pointer }
+
+input { }
+
+input, select, textarea, button, form, img, label { vertical-align: middle; }
+
+table, tr, td {
+    text-align: center;
+    border : 1px solid #000;
+    border-collapse: collapse;
+}
+
+section { display: inline-block; position: absolute; }
+
+p { width: 100px; display: inline-block; text-align: center; }
+
+.container { width: 1050px; margin: 0 auto; position: relative; }
+
+.width100 { width: 100% }
+
+.input_wide { width: 300px; }
+.input_middle { width: 200px; }
+.input_narrow { width: 50px; }
+/*버튼박스*/
+.botton_box { display: flex; margin-bottom: 10px; }
+.botton_wrap { display: inline-block; margin-left: auto; }
+
+/*검색박스*/
+.search_box { border: 2px solid #111; padding: 10px; margin-bottom: 10px; }
+
+/*계좌정보리스트*/
+.account_box { border: 2px solid #111; }
+
+/*내용*/
+.content_box { border: 2px solid #111; position: absolute; right: 0; padding: 10px; }
+
+/*팝업*/
+.layer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(34,34,34,.5);
+    z-index: 1010;
+}
+
+.layer_container {
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 200px;
+    border-radius: 10px;
+}
+
+.layer_content { padding: 16px; text-align: center; }
+
+.country_select { font-size: 15px; }
+
+.layer_btn { text-align: center; padding: 0 16px 16px 16px;}
+
+h3 { display: inline-block; font-size: 13px; }

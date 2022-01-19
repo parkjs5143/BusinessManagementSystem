@@ -1,0 +1,177 @@
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>거래처 관리</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}"></head>
+<body>
+    <div class="container">
+        <!--버튼-->
+        <div class="botton_box">
+            <div class="botton_wrap">
+                <button type="reset" onclick="reset()">초기화</button>
+                <button id="btn_submit" onclick="registCustom()">등록</button>
+                <button id="btn_modify" disabled onclick="modifyCustom()">수정</button>
+                <button id="btn_delete" disabled onclick="deleteCustom()">삭제</button>
+            </div>
+        </div>
+        <section>
+            <!--검색-->
+            <input type="hidden" value="" id="curr_busi_num">
+            <div class="search_box">
+                <ul>
+                    <li>
+                        <p class="title">사업자번호</p>
+                        <input type="text" class="input_txt" id="busi_num_search_input">
+                    </li>
+                    <li>
+                        <p class="title">거래처명</p>
+                        <input type="text" class="input_txt" id="custom_search_input">
+                        <button class="btn_search" onclick="clickSerarchBtn()">조회</button>
+                    </li>
+                </ul>
+            </div>
+            <!--거래처리스트-->
+            <div class="account_box">
+                <table class="width100 account_table">
+                    <tr class="table_title">
+                        <td>사업자 번호</td>
+                        <td>거래처명</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <!--내용-->
+        <section class="content_box">
+            <ul>
+                <li>
+                    <p>사업자번호</p>
+                    <input class="input_middle" id="busi_num_input">
+                    <p>약칭</p>
+                    <input class="input_middle" id="short_input">
+                </li>
+                <li>
+                    <p>거래처명</p>
+                    <input class="input_wide" id="custom_input">
+                </li>
+                <li>
+                    <p>대표자</p>
+                    <input class="input_middle" id="ceo_input">
+                    <p>담당자</p>
+                    <input class="input_middle" id="charge_person_input">
+                </li>
+                <li>
+                    <p>업태</p>
+                    <input class="input_middle" id="busi_condition_input">
+                    <p>종목</p>
+                    <input class="input_middle" id="item_input">
+                </li>
+                <li>
+                    <p>우편번호</p>
+                    <input class="input_middle" id="post_num_input" readonly>
+                    <button id="btn_post" onclick="sample6_execDaumPostcode()">검색</button>
+                    <p>주소1</p>
+                    <input id="addr1_input" readonly>
+                </li>
+                <li>
+                    <p>주소2</p>
+                    <input class="input_wide" id="addr2_input">
+                </li>
+                <li>
+                    <p>전화번호</p>
+                    <input class="input_middle" id="tel_input">
+                    <p>팩스번호</p>
+                    <input class="input_middle" id="fax_input">
+                </li>
+                <li>
+                    <p>홈페이지</p>
+                    <input class="input_wide" id="homepage_input">
+                </li>
+                <li>
+                    <p>법인여부</p>
+                    <p class="input_middle">
+                        <input type="radio" id="corp_y" name="corp" value="1" checked>
+                        <label for="corp_y">법인</label>
+                        <input type="radio" id="corp_n" name="corp" value="0">
+                        <label for="corp_n">개인</label>
+                    </p>
+                    <p>해외여부</p>
+                    <p class="input_middle">
+                        <input type="radio" id="foreig_n" name="foreign" value="0" checked>
+                        <label for="foreig_n">국내</label>
+                        <input type="radio" id="foreig_y" name="foreign" value="1">
+                        <label for="foreig_y">해외</label>
+                    </p>
+                </li>
+                <li>
+                    <p>과세구분</p>
+                    <select name="tax" class="input_middle" id="select_tax">
+                        <option value="1">과세/면세</option>
+                        <option value="0">비과세</option>
+                    </select>
+                    <p>국가</p>
+                    <input type="text" class="input_narrow" id="country_eng" readonly value="KOR">
+                    <input type="text" readonly id="country_kor" value="대한민국">
+                    <button onclick="openPop()">검색</button>
+                </li>
+                <li>
+                    <p>특수관계자</p><p class="input_middle"><input type="checkbox" name="special_relation"></p>
+                    <p>거래중지</p><p class="input_middle"><input type="checkbox" name="trade_stop"></p>
+                </li>
+                <li>
+                    <p>계약기간</p>
+                    <input class="input_middle" type="date" id="contract_period_s_input">
+                    <p> ~ </p>
+                    <input class="input_middle" type="date" id="contract_period_e_input">
+                </li>
+                <li>
+                    <p>등록정보</p>
+                    <input type="text" class="input_narrow" id="regi_info_man_input" placeholder="등록자">
+                    <input type="text" id="regi_info_date_input" readonly placeholder="날짜(자동등록)">
+                    <p>변경정보</p>
+                    <input type="text" class="input_narrow" id="modi_info_man_input" readonly placeholder="변경자">
+                    <input type="text" id="modi_info_date_input" readonly placeholder="날짜(자동등록)">
+                </li>
+                <li style="margin-top: 20px">(거래처 계좌정보)</li>
+                <li>
+                    <table class="width100">
+                        <tr>
+                            <td>사무소</td>
+                            <td>은행</td>
+                            <td>계좌번호</td>
+                        </tr>
+                        <tr>
+                            <td><input class="width100" type="text" id="factory_input"></td>
+                            <td><input class="width100" type="text" id="trade_bank_input"></td>
+                            <td><input class="width100" type="text" id="account_num_input"></td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <!--팝업-->
+    <div class="layer">
+        <div class="layer_container">
+            <div class="layer_content">
+                <h3>국가선택</h3>
+                <select name="country_select" id="country_select">
+                    <option value="KOR 대한민국">대한민국</option>
+                    <option value="USA 미국">미국</option>
+                    <option value="JPN 일본">일본</option>
+                    <option value="FRA 프랑스">프랑스</option>
+                </select>
+            </div>
+            <div class="layer_btn">
+                <button class="btn_cancle" onclick="closePop()">취소</button>
+                <button class="btn_submit" onclick="submitPop()">확인</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</html>
